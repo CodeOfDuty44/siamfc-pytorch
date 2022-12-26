@@ -26,8 +26,6 @@ class SiamFC(nn.Module):
         # return res * self.out_scale
 
         res = self._fast_xcorr(z, x) * self.out_scale
-        print(res.shape)
-        exit()
         return res
     
     def _fast_xcorr(self, z, x):
