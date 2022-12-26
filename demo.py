@@ -8,7 +8,7 @@ from siamfc import TrackerSiamFC
 
 
 if __name__ == '__main__':
-    seq_dir = os.path.expanduser('~/data/OTB/Bird2/')
+    seq_dir = os.path.expanduser('~/data/OTB/Biker/')
     img_files = sorted(glob.glob(seq_dir + 'img/*.jpg'))
     anno = np.loadtxt(seq_dir + 'groundtruth_rect.txt', delimiter = ",")
 

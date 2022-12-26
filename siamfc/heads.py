@@ -14,19 +14,17 @@ class SiamFC(nn.Module):
         self.out_scale = out_scale
     
     def forward(self, z, x):
-        # x0 = x[0].unsqueeze(0)
-        # x1 = x[1].unsqueeze(0)
-        # x2 = x[2].unsqueeze(0)
-        # res0 = self.pixel_corr_mat(x0, z).sum(dim = 1, keepdim = True)
-        # res1 = self.pixel_corr_mat(x1, z).sum(dim = 1, keepdim = True)
-        # res2 = self.pixel_corr_mat(x2, z).sum(dim = 1, keepdim = True)
-        # res = torch.cat([res0,res1,res2], dim = 0)
-        # # print(res.shape)
-        # # exit()
-        # return res * self.out_scale
+        x0 = x[0].unsqueeze(0)
+        x1 = x[1].unsqueeze(0)
+        x2 = x[2].unsqueeze(0)
+        res0 = self.pixel_corr_mat(x0, z).sum(dim = 1, keepdim = True)
+        res1 = self.pixel_corr_mat(x1, z).sum(dim = 1, keepdim = True)
+        res2 = self.pixel_corr_mat(x2, z).sum(dim = 1, keepdim = True)
+        res = torch.cat([res0,res1,res2], dim = 0)
+        return res * self.out_scale
 
-        res = self._fast_xcorr(z, x) * self.out_scale
-        return res
+        # res = self._fast_xcorr(z, x) * self.out_scale
+        # return res
     
     def _fast_xcorr(self, z, x):
         # fast cross correlation

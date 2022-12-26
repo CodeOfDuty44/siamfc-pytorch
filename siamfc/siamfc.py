@@ -168,6 +168,8 @@ class TrackerSiamFC(Tracker):
         # responses
         x = self.net.backbone(x)
         responses = self.net.head(self.kernel, x)
+        # tensor2im(responses[0], "corr_out")
+        # exit()
         responses = responses.squeeze(1).cpu().numpy()
 
         # upsample responses and penalize scale changes
@@ -337,3 +339,16 @@ class TrackerSiamFC(Tracker):
         self.labels = torch.from_numpy(labels).to(self.device).float()
         
         return self.labels
+
+def tensor2im(tensor, name):
+    """print ternsor for debug"""
+    img = np.array(tensor[0].cpu())
+    img = cv2.normalize(img,None,0,255,norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+    img = img.resize()
+    img = cv2.applyColorMap(img, cv2.COLORMAP_JET)
+    # print(img.shape)
+    # exit()
+    #img_hwc = np.transpose(img, (1,2,0))
+    #img_hwc = cv2.cvtColor(img_hwc, cv2.COLOR_RGB2BGR)
+    cv2.imshow(name , img)
+    cv2.waitKey(1000000)
